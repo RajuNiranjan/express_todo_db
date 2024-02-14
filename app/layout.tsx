@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="bg-[#eaeaea] h-screen">
+        <div className="bg-[#eaeaea] h-screen select-none">
           <NavBar />
           {children}
         </div>
