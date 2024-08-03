@@ -81,6 +81,25 @@ export const deleteTask = async (req, res, next) => {
       .status(200)
       .json({ message: "task deleted successfully", task: delete_task });
   } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const searchQuery = async (req, res, next) => {
+  try {
+    const searchText = req.query.q;
+    if (!searchText) {
+      return res.status(400).json({ message: "Search term is required" });
+    }
+
+    const tasks = await TodoModel.find({
+      task: { $regex: searchText, $options: "i" },
+    });
+    return res.status(200).json({ message: "Search results", tasks });
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
